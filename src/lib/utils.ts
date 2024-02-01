@@ -51,7 +51,7 @@ export function constructMetadata({
       ],
     },
     icons,
-    // metadataBase: new URL('digitalhippo-production-bfac.up.railway.app'),
+    metadataBase: new URL('digitalhippo-production-bfac.up.railway.app'),
     ...(noIndex && {
       robots: {
         index: false,
