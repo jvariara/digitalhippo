@@ -1,13 +1,13 @@
 import express from "express";
 import { WebhookRequest } from "./server";
-import { getPayloadClient } from "./get-payload";
+import { getPayloadClient, transporter } from "./get-payload";
 import Stripe from "stripe";
 import { Product } from "./payload-types";
 import { stripe } from "./lib/stripe";
 import { Resend } from "resend";
 import { ReceiptEmailHtml } from "./components/emails/ReceiptEmail";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const stripeWebhookHandler = async (
   req: express.Request,
@@ -87,8 +87,20 @@ export const stripeWebhookHandler = async (
 
     // send receipt
     try {
-      const data = await resend.emails.send({
-        from: "DigitalHippo <hello@joshtriedcoding.com>",
+      // const data = await resend.emails.send({
+      //   from: "DigitalHippo <hello@joshtriedcoding.com>",
+      //   to: [user.email],
+      //   subject: "Thanks for your order! This is your receipt.",
+      //   html: ReceiptEmailHtml({
+      //     date: new Date(),
+      //     email: user.email,
+      //     orderId: session.metadata.orderId,
+      //     products: order.products as Product[],
+      //   }),
+      // });
+
+      const data = await transporter.sendMail({
+        from: "DigitalHippo <jvariara@gmail.com>",
         to: [user.email],
         subject: "Thanks for your order! This is your receipt.",
         html: ReceiptEmailHtml({

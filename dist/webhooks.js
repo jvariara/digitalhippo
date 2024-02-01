@@ -39,9 +39,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripeWebhookHandler = void 0;
 var get_payload_1 = require("./get-payload");
 var stripe_1 = require("./lib/stripe");
-var resend_1 = require("resend");
 var ReceiptEmail_1 = require("./components/emails/ReceiptEmail");
-var resend = new resend_1.Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var webhookRequest, body, signature, event, session, payload, users, user, orders, order, data, error_1;
     var _a, _b;
@@ -110,8 +109,8 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                 _c.label = 5;
             case 5:
                 _c.trys.push([5, 7, , 8]);
-                return [4 /*yield*/, resend.emails.send({
-                        from: "DigitalHippo <hello@joshtriedcoding.com>",
+                return [4 /*yield*/, get_payload_1.transporter.sendMail({
+                        from: "DigitalHippo <jvariara@gmail.com>",
                         to: [user.email],
                         subject: "Thanks for your order! This is your receipt.",
                         html: (0, ReceiptEmail_1.ReceiptEmailHtml)({

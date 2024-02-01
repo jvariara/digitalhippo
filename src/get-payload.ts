@@ -8,7 +8,7 @@ dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 })
 
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   secure: true,
   service: "gmail",

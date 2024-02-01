@@ -50,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPayloadClient = void 0;
+exports.getPayloadClient = exports.transporter = void 0;
 var dotenv_1 = __importDefault(require("dotenv"));
 var path_1 = __importDefault(require("path"));
 var payload_1 = __importDefault(require("payload"));
@@ -58,13 +58,14 @@ var nodemailer_1 = __importDefault(require("nodemailer"));
 dotenv_1.default.config({
     path: path_1.default.resolve(__dirname, '../.env'),
 });
-var transporter = nodemailer_1.default.createTransport({
-    host: "smtp.resend.com",
+exports.transporter = nodemailer_1.default.createTransport({
+    host: "smtp.gmail.com",
     secure: true,
+    service: "gmail",
     port: 465,
     auth: {
-        user: "resend",
-        pass: process.env.RESEND_API_KEY
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
     }
 });
 var cached = global.payload;
@@ -90,8 +91,8 @@ var getPayloadClient = function (_a) {
                     }
                     if (!cached.promise) {
                         cached.promise = payload_1.default.init(__assign({ email: {
-                                transport: transporter,
-                                fromAddress: "onboarding@resend.dev",
+                                transport: exports.transporter,
+                                fromAddress: process.env.EMAIL,
                                 fromName: "DigitalHippo"
                             }, secret: process.env.PAYLOAD_SECRET, local: (initOptions === null || initOptions === void 0 ? void 0 : initOptions.express) ? false : true }, (initOptions || {})));
                     }
